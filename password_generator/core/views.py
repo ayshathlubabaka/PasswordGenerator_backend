@@ -8,13 +8,13 @@ import string
 
 class PasswordGenerationView(APIView):
     def post(self,request):
-        print(request.data)
+        
         serializer = PasswordGenerationSerializer(data=request.data)
         if serializer.is_valid():
             strength = serializer.validated_data.get('strength')
             length = serializer.validated_data.get('length')
             password = self.generate_password(strength,length)
-            print(password)
+            
             return Response({'password':password}, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
